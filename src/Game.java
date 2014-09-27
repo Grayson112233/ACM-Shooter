@@ -19,7 +19,7 @@ public class Game extends GraphicsProgram{
 	// UI
 	Ui ui = new Ui();
 	
-	public static void main(String args[]){
+	public static void main(String[] args){
 		new Game().start(args);
 	}
 	public void run(){
