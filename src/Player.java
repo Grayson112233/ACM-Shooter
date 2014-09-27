@@ -1,13 +1,11 @@
-import java.util.ArrayList;
+import java.util.List;
 
 import acm.graphics.GImage;
-
-
 
 public class Player {
 	public double x = 0;
 	public double y = 0;
-	public ArrayList <Bullet> bullets;
+	public List<Bullet> bullets;
 	public int bullet_cooldown = 30;
 	public int bullet_cooldown_timer = 0;
 	public static final int PISTOL_COOLDOWN = 30;
@@ -107,34 +105,34 @@ public class Player {
 		if(this.alive == false && this.respawn_timer == 0){this.alive = true;}
 		if(this.alive){
 			if(this.bullet_cooldown_timer > 0){this.bullet_cooldown_timer--;}
-			if(inputs.key_w){this.y -= 3;this.current_animation = 2;}
-			if(inputs.key_s){this.y += 3;this.current_animation = 1;}
-			if(inputs.key_a){this.x -= 3;this.current_animation = 3;}
-			if(inputs.key_d){this.x += 3;this.current_animation = 4;}
-			if(inputs.key_r_released){
+			if(inputs.keyW){this.y -= 3;this.current_animation = 2;}
+			if(inputs.keyS){this.y += 3;this.current_animation = 1;}
+			if(inputs.keyA){this.x -= 3;this.current_animation = 3;}
+			if(inputs.keyD){this.x += 3;this.current_animation = 4;}
+			if(inputs.keyRreleased){
 				this.current_gun ++;
 				if(this.current_gun > Player.NUM_OF_GUNS){this.current_gun = 1;}
 				if(this.current_gun == 1){this.bullet_cooldown = Player.PISTOL_COOLDOWN;}
 				if(this.current_gun == 2){this.bullet_cooldown = Player.MACHINEGUN_COOLDOWN;}
 			}
-			if(inputs.key_w == false && inputs.key_a == false && inputs.key_s == false && inputs.key_d == false){this.current_animation = 5;}
-			if(inputs.key_right && this.bullet_cooldown_timer == 0){
-				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, "right"));
+			if(inputs.keyW == false && inputs.keyA == false && inputs.keyS == false && inputs.keyD == false){this.current_animation = 5;}
+			if(inputs.keyRight && this.bullet_cooldown_timer == 0){
+				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.RIGHT));
 				main.add(this.bullets.get(this.bullets.size()-1));
 				this.bullet_cooldown_timer = this.bullet_cooldown;
 			}
-			if(inputs.key_left && this.bullet_cooldown_timer == 0){
-				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, "left"));
+			if(inputs.keyLeft && this.bullet_cooldown_timer == 0){
+				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.LEFT));
 				main.add(this.bullets.get(this.bullets.size()-1));
 				this.bullet_cooldown_timer = this.bullet_cooldown;
 			}
-			if(inputs.key_up && this.bullet_cooldown_timer == 0){
-				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, "up"));
+			if(inputs.keyUp && this.bullet_cooldown_timer == 0){
+				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.UP));
 				main.add(this.bullets.get(this.bullets.size()-1));
 				this.bullet_cooldown_timer = this.bullet_cooldown;
 			}
-			if(inputs.key_down && this.bullet_cooldown_timer == 0){
-				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, "down"));
+			if(inputs.keyDown && this.bullet_cooldown_timer == 0){
+				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.DOWN));
 				main.add(this.bullets.get(this.bullets.size()-1));
 				this.bullet_cooldown_timer = this.bullet_cooldown;
 			}

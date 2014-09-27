@@ -61,24 +61,24 @@ public class Enemy {
 			if(this.bullet_cooldown_timer == 0 && player.alive){
 				if(player.getCenterX() > this.x && player.getCenterX() < this.x + Enemy.standing.getWidth()){
 					if(player.getCenterY() > this.y + Enemy.standing.getHeight() / 2){
-						this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, "down"));
+						this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.DOWN));
 						main.add(this.bullets.get(this.bullets.size()-1));
 						this.bullet_cooldown_timer = Enemy.BULLET_COOLDOWN;
 					}
 					if(player.getCenterY() <= this.y + Enemy.standing.getHeight() / 2){
-						this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, "up"));
+						this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.UP));
 						main.add(this.bullets.get(this.bullets.size()-1));
 						this.bullet_cooldown_timer = Enemy.BULLET_COOLDOWN;
 					}
 				}
 				if(player.getCenterY() > this.y && player.getCenterY() < this.y + Enemy.standing.getHeight()){
 					if(player.getCenterX() > this.x + Enemy.standing.getWidth() / 2){
-						this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, "right"));
+						this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.RIGHT));
 						main.add(this.bullets.get(this.bullets.size()-1));
 						this.bullet_cooldown_timer = Enemy.BULLET_COOLDOWN;
 					}
 					if(player.getCenterX() <= this.x + Enemy.standing.getHeight() / 2){
-						this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, "left"));
+						this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.LEFT));
 						main.add(this.bullets.get(this.bullets.size()-1));
 						this.bullet_cooldown_timer = Enemy.BULLET_COOLDOWN;
 					}
