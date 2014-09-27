@@ -1,45 +1,48 @@
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 
 public class Inputs implements KeyListener {
-	public boolean key_up = false;
-	public boolean key_down = false;
-	public boolean key_left = false;
-	public boolean key_right = false;
-	public boolean key_space = false;
-	public boolean key_w = false;
-	public boolean key_a = false;
-	public boolean key_s = false;
-	public boolean key_d = false;
-	public boolean key_e = false;
-	public boolean key_r = false;
-	public boolean key_r_released = false;
+	public boolean key_up = false,
+	               key_down = false,
+	               key_left = false,
+	               key_right = false,
+	               key_space = false,
+	    	       key_w = false,
+	    	       key_a = false,
+	    	       key_s = false,
+	    	       key_d = false,
+                   key_e = false,
+                   key_r = false,
+	               key_r_released = false;
 	public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == 38){this.key_up = true;}
-        if(e.getKeyCode() == 40){this.key_down = true;}
-        if(e.getKeyCode() == 37){this.key_left = true;}
-        if(e.getKeyCode() == 39){this.key_right = true;}
-        if(e.getKeyCode() == 32){this.key_space = true;}
-        if(e.getKeyCode() == 87){this.key_w = true;}
-        if(e.getKeyCode() == 65){this.key_a = true;}
-        if(e.getKeyCode() == 83){this.key_s = true;}
-        if(e.getKeyCode() == 68){this.key_d = true;}
-        if(e.getKeyCode() == 82){this.key_r = true;}
+		switch(e.getKeyCode()) {
+			case 38: this.key_up = true;    break;
+			case 40: this.key_down = true;  break;
+			case 37: this.key_left = true;  break;
+			case 39: this.key_right = true; break;
+			case 32: this.key_space = true; break;
+			case 87: this.key_w = true;     break;
+			case 65: this.key_a = true;     break;
+			case 83: this.key_s = true;     break;
+			case 68: this.key_d = true;     break;
+			case 82: this.key_r = true;     break;
+		}
         //System.out.println(e.getKeyCode());
     }	
 	public void keyReleased(KeyEvent e) {
-        if(e.getKeyCode() == 38){this.key_up = false;}
-        if(e.getKeyCode() == 40){this.key_down = false;}
-        if(e.getKeyCode() == 37){this.key_left = false;}
-        if(e.getKeyCode() == 39){this.key_right = false;}
-        if(e.getKeyCode() == 32){this.key_space = false;}
-        if(e.getKeyCode() == 87){this.key_w = false;}
-        if(e.getKeyCode() == 65){this.key_a = false;}
-        if(e.getKeyCode() == 83){this.key_s = false;}
-        if(e.getKeyCode() == 68){this.key_d = false;}
-        if(e.getKeyCode() == 82){this.key_r = false;this.key_r_released = true;}
+		switch(e.getKeyCode()) {
+			case 38: this.key_up = false;   break;
+			case 40: this.key_down = false;	break;
+			case 37: this.key_left = false;	break;
+			case 39: this.key_right = false;break;
+			case 32: this.key_space = false;break;
+			case 87: this.key_w = false;    break;
+			case 65: this.key_a = false;    break;
+			case 83: this.key_s = false;    break;
+			case 68: this.key_d = false;    break;
+			case 82: this.key_r = false; this.key_r_released = true; break;
+		}
     }
 	@Override
 	public void keyTyped(KeyEvent e) {

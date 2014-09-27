@@ -1,13 +1,5 @@
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import acm.graphics.*;
 import acm.program.GraphicsProgram;
 
 public class Game extends GraphicsProgram{

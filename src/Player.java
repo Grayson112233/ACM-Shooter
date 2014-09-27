@@ -1,13 +1,11 @@
-import java.util.ArrayList;
+import java.util.List;
 
 import acm.graphics.GImage;
-
-
 
 public class Player {
 	public double x = 0;
 	public double y = 0;
-	public ArrayList <Bullet> bullets;
+	public List<Bullet> bullets;
 	public int bullet_cooldown = 30;
 	public int bullet_cooldown_timer = 0;
 	public static final int PISTOL_COOLDOWN = 30;
@@ -119,22 +117,22 @@ public class Player {
 			}
 			if(inputs.key_w == false && inputs.key_a == false && inputs.key_s == false && inputs.key_d == false){this.current_animation = 5;}
 			if(inputs.key_right && this.bullet_cooldown_timer == 0){
-				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, "right"));
+				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.RIGHT));
 				main.add(this.bullets.get(this.bullets.size()-1));
 				this.bullet_cooldown_timer = this.bullet_cooldown;
 			}
 			if(inputs.key_left && this.bullet_cooldown_timer == 0){
-				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, "left"));
+				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.LEFT));
 				main.add(this.bullets.get(this.bullets.size()-1));
 				this.bullet_cooldown_timer = this.bullet_cooldown;
 			}
 			if(inputs.key_up && this.bullet_cooldown_timer == 0){
-				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, "up"));
+				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.UP));
 				main.add(this.bullets.get(this.bullets.size()-1));
 				this.bullet_cooldown_timer = this.bullet_cooldown;
 			}
 			if(inputs.key_down && this.bullet_cooldown_timer == 0){
-				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, "down"));
+				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.DOWN));
 				main.add(this.bullets.get(this.bullets.size()-1));
 				this.bullet_cooldown_timer = this.bullet_cooldown;
 			}
