@@ -8,7 +8,7 @@ A simple shooter game written in ACM with enemy AI
 
 Changelog:
 
-1.0:
+**1.0**:
 
   Added Player with Pistol and Machine Gun
   
