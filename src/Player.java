@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.List;
 
 import acm.graphics.GImage;
@@ -119,14 +120,16 @@ public class Player {
 		}
 	}
 	public void updateBullets(Game main){
-		if(this.bullets.size() > 0){
-			for(int i = 0; i < this.bullets.size(); i++){
-				this.bullets.get(i).update();
-				if(this.bullets.get(i).getX() > Game.APPLICATION_WIDTH || this.bullets.get(i).getY() < 0 || this.bullets.get(i).getX() < 0 || this.bullets.get(i).getY() > Game.APPLICATION_HEIGHT){
-					main.remove(this.bullets.get(i));
-					this.bullets.remove(i);
-					i--;
-				}
+		Iterator<Bullet> bulletIter = this.bullets.iterator();
+		while(bulletIter.hasNext()) {
+			Bullet bullet = bulletIter.next();
+			bullet.update();
+			if(bullet.getX() > Game.APPLICATION_WIDTH || 
+			   bullet.getY() < 0 || 
+			   bullet.getX() < 0 || 
+			   bullet.getY() > Game.APPLICATION_HEIGHT){
+				main.remove(bullet);
+				bulletIter.remove();
 			}
 		}
 	}
