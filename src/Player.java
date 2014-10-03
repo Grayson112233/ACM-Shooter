@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.List;
 
 import acm.graphics.GImage;
@@ -27,11 +28,21 @@ public class Player {
 	public static final GImage left1 = new GImage("assets/pics/left1.png");
 	public static final GImage left2 = new GImage("assets/pics/left2.png");
 	public static final GImage standing = new GImage("assets/pics/standing.png");
-	public int current_frame = 1;
-	public int current_animation = 1;
+	private static final GImage[][] animFrames = new GImage[][]
+		{
+			{ Player.down1, Player.down2 },
+			{ Player.up1, Player.up2 },
+			{ Player.left1, Player.left2 },
+			{ Player.right1, Player.right2 },
+			{ Player.standing }
+		};
+	
+	public int currentFrame = 0;
+	public int currentAnimation = 0;
 	public int[] animaitons_num_frames = {2, 2, 2, 2, 1};
 	public static final int FRAME_TICK_DELAY = 20;
 	public int frame_ticker = 1;
+	
 	public boolean alive = true;
 	public int respawn_timer = 0;
 	public static final int RESPAWN_TIME = 60 * 3;
@@ -42,26 +53,8 @@ public class Player {
 	public void draw(){
 		if(this.alive){
 			this.setAllInvisible();
-			if(this.current_animation == 1){
-				if(this.current_frame == 1){Player.down1.setVisible(true);Player.down1.setLocation(this.x, this.y);}
-				if(this.current_frame == 2){Player.down2.setVisible(true);Player.down2.setLocation(this.x, this.y);}
-			}
-			if(this.current_animation == 2){
-				if(this.current_frame == 1){Player.up1.setVisible(true);Player.up1.setLocation(this.x, this.y);}
-				if(this.current_frame == 2){Player.up2.setVisible(true);Player.up2.setLocation(this.x, this.y);}
-			}
-			if(this.current_animation == 3){
-				if(this.current_frame == 1){Player.left1.setVisible(true);Player.left1.setLocation(this.x, this.y);}
-				if(this.current_frame == 2){Player.left2.setVisible(true);Player.left2.setLocation(this.x, this.y);}
-			}
-			if(this.current_animation == 4){
-				if(this.current_frame == 1){Player.right1.setVisible(true);Player.right1.setLocation(this.x, this.y);}
-				if(this.current_frame == 2){Player.right2.setVisible(true);Player.right2.setLocation(this.x, this.y);}
-			}
-			if(this.current_animation == 5){
-				Player.standing.setVisible(true);
-				Player.standing.setLocation(this.x, this.y);
-			}
+			animFrames[this.currentAnimation][currentFrame].setVisible(true);
+			animFrames[this.currentAnimation][currentFrame].setLocation(this.x, this.y);
 		}
 	}
 	
@@ -74,79 +67,69 @@ public class Player {
 	}
 	
 	public void tickFrames(){
-		this.frame_ticker ++;
-		if(this.frame_ticker == Player.FRAME_TICK_DELAY){this.current_frame ++;this.frame_ticker = 0;}
-		if(this.current_frame > this.animaitons_num_frames[this.current_animation - 1]){this.current_frame = 1;}
+		this.frame_ticker++;
+		if(this.frame_ticker == Player.FRAME_TICK_DELAY){
+			this.currentFrame++;
+			this.frame_ticker = 0;
+		}
+		if(this.currentFrame >= animFrames[this.currentAnimation].length)
+			this.currentFrame = 0;
 	}
 	public void setAllInvisible(){
-		Player.up1.setVisible(false);
-		Player.up2.setVisible(false);
-		Player.right1.setVisible(false);
-		Player.right2.setVisible(false);
-		Player.left1.setVisible(false);
-		Player.left2.setVisible(false);
-		Player.down1.setVisible(false);
-		Player.down2.setVisible(false);
-		Player.standing.setVisible(false);
+		for(GImage[] anim : animFrames)
+			for(GImage frame : anim)
+				frame.setVisible(false);
 	}
 	public void addImages(Game main){
-		main.add(Player.down1);
-		main.add(Player.down2);
-		main.add(Player.up1);
-		main.add(Player.up2);
-		main.add(Player.left1);
-		main.add(Player.left2);
-		main.add(Player.right1);
-		main.add(Player.right2);
-		main.add(Player.standing);
+		for(GImage[] anim : animFrames)
+			for(GImage frame : anim)
+				main.add(frame);
 	}
 	public void keyActions(Game main, Inputs inputs){
-		if(this.respawn_timer > 0){this.respawn_timer--;}
-		if(this.alive == false && this.respawn_timer == 0){this.alive = true;}
+		if(this.respawn_timer > 0)
+			this.respawn_timer--;
+		if(this.alive == false && this.respawn_timer == 0)
+			this.alive = true;
 		if(this.alive){
-			if(this.bullet_cooldown_timer > 0){this.bullet_cooldown_timer--;}
-			if(inputs.keyW){this.y -= 3;this.current_animation = 2;}
-			if(inputs.keyS){this.y += 3;this.current_animation = 1;}
-			if(inputs.keyA){this.x -= 3;this.current_animation = 3;}
-			if(inputs.keyD){this.x += 3;this.current_animation = 4;}
+			if(this.bullet_cooldown_timer > 0)
+				this.bullet_cooldown_timer--;
+			if(inputs.keyW){this.y -= 3;this.currentAnimation = 1;}
+			if(inputs.keyS){this.y += 3;this.currentAnimation = 0;}
+			if(inputs.keyA){this.x -= 3;this.currentAnimation = 2;}
+			if(inputs.keyD){this.x += 3;this.currentAnimation = 3;}
 			if(inputs.keyRreleased){
 				this.current_gun ++;
 				if(this.current_gun > Player.NUM_OF_GUNS){this.current_gun = 1;}
 				if(this.current_gun == 1){this.bullet_cooldown = Player.PISTOL_COOLDOWN;}
 				if(this.current_gun == 2){this.bullet_cooldown = Player.MACHINEGUN_COOLDOWN;}
 			}
-			if(inputs.keyW == false && inputs.keyA == false && inputs.keyS == false && inputs.keyD == false){this.current_animation = 5;}
-			if(inputs.keyRight && this.bullet_cooldown_timer == 0){
-				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.RIGHT));
-				main.add(this.bullets.get(this.bullets.size()-1));
-				this.bullet_cooldown_timer = this.bullet_cooldown;
-			}
-			if(inputs.keyLeft && this.bullet_cooldown_timer == 0){
-				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.LEFT));
-				main.add(this.bullets.get(this.bullets.size()-1));
-				this.bullet_cooldown_timer = this.bullet_cooldown;
-			}
-			if(inputs.keyUp && this.bullet_cooldown_timer == 0){
-				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.UP));
-				main.add(this.bullets.get(this.bullets.size()-1));
-				this.bullet_cooldown_timer = this.bullet_cooldown;
-			}
-			if(inputs.keyDown && this.bullet_cooldown_timer == 0){
-				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, Direction.DOWN));
+			if(inputs.keyW == false && inputs.keyA == false && inputs.keyS == false && inputs.keyD == false)
+				this.currentAnimation = 4;
+			
+			if(this.bullet_cooldown_timer == 0 && (inputs.keyRight || inputs.keyLeft || inputs.keyUp || inputs.keyDown)) {
+				Direction bulletDir = 
+					inputs.keyRight ? Direction.RIGHT : 
+					inputs.keyLeft ? Direction.LEFT :
+					inputs.keyUp ? Direction.UP : 
+					inputs.keyDown ? Direction.DOWN : null;
+				
+				this.bullets.add(new Bullet(this.x + Player.down1.getWidth() / 2, this.y - 15 + Player.down1.getHeight() / 2, bulletDir));
 				main.add(this.bullets.get(this.bullets.size()-1));
 				this.bullet_cooldown_timer = this.bullet_cooldown;
 			}
 		}
 	}
 	public void updateBullets(Game main){
-		if(this.bullets.size() > 0){
-			for(int i = 0; i < this.bullets.size(); i++){
-				this.bullets.get(i).update();
-				if(this.bullets.get(i).getX() > Game.APPLICATION_WIDTH || this.bullets.get(i).getY() < 0 || this.bullets.get(i).getX() < 0 || this.bullets.get(i).getY() > Game.APPLICATION_HEIGHT){
-					main.remove(this.bullets.get(i));
-					this.bullets.remove(i);
-					i--;
-				}
+		Iterator<Bullet> bulletIter = this.bullets.iterator();
+		while(bulletIter.hasNext()) {
+			Bullet bullet = bulletIter.next();
+			bullet.update();
+			if(bullet.getX() > Game.APPLICATION_WIDTH || 
+			   bullet.getY() < 0 || 
+			   bullet.getX() < 0 || 
+			   bullet.getY() > Game.APPLICATION_HEIGHT){
+				main.remove(bullet);
+				bulletIter.remove();
 			}
 		}
 	}

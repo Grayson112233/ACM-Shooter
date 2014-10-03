@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import acm.program.GraphicsProgram;
 
@@ -83,32 +84,30 @@ public class Game extends GraphicsProgram{
 		this.enemy.bullets = new ArrayList<Bullet>();
 	}
 	public void checkCollisions(){
-		if(this.player.bullets.size() > 0){
-			for(int i = 0;i < this.player.bullets.size();i++){
-				if(this.enemy.alive){
-					if(this.player.bullets.get(i).getCenterX() > this.enemy.x && this.player.bullets.get(i).getCenterX() < this.enemy.x + Enemy.standing.getWidth()){
-						if(this.player.bullets.get(i).getCenterY() > this.enemy.y && this.player.bullets.get(i).getCenterY() < this.enemy.y + Enemy.standing.getHeight()){
-							this.enemy.hit();
-							remove(this.player.bullets.get(i));
-							this.player.bullets.remove(i);
-							i--;
-						}
-					}
-				}
+		Iterator<Bullet> playerBulletsIter = this.player.bullets.iterator();
+		while(playerBulletsIter.hasNext()) {
+			Bullet bullet = playerBulletsIter.next();
+			if(this.enemy.alive &&
+			   bullet.getCenterX() > this.enemy.x && 
+			   bullet.getCenterX() < this.enemy.x + Enemy.standing.getWidth() &&
+			   bullet.getCenterY() > this.enemy.y && 
+			   bullet.getCenterY() < this.enemy.y + Enemy.standing.getHeight()  ){
+						this.enemy.hit();
+						remove(bullet);
+						playerBulletsIter.remove(); //Removes last element from iterator/collection
 			}
 		}
-		if(this.enemy.bullets.size() > 0){
-			for(int i = 0;i < this.enemy.bullets.size();i++){
-				if(this.player.alive){
-					if(this.enemy.bullets.get(i).getCenterX() > this.player.x && this.enemy.bullets.get(i).getCenterX() < this.player.x + Player.standing.getWidth()){
-						if(this.enemy.bullets.get(i).getCenterY() > this.player.y && this.enemy.bullets.get(i).getCenterY() < this.player.y + Player.standing.getHeight()){
-							this.player.hit();
-							remove(this.enemy.bullets.get(i));
-							this.enemy.bullets.remove(i);
-							i--;
-						}
-					}
-				}
+		Iterator<Bullet> enemyBulletsIter = this.enemy.bullets.iterator();
+		while(enemyBulletsIter.hasNext()) {
+			Bullet bullet = enemyBulletsIter.next();
+			if(this.player.alive &&
+			   bullet.getCenterX() > this.player.x && 
+			   bullet.getCenterX() < this.player.x + Player.standing.getWidth() &&
+			   bullet.getCenterY() > this.player.y && 
+			   bullet.getCenterY() < this.player.y + Player.standing.getHeight()){
+						this.player.hit();
+						remove(bullet);
+						enemyBulletsIter.remove();
 			}
 		}
 	}
