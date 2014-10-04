@@ -37,6 +37,7 @@ public class Game extends GraphicsProgram{
 			updateBullets();
 			drawPlayer();
 			enemy.update(this, this.player, Game.APPLICATION_WIDTH, Game.APPLICATION_HEIGHT);
+			player.update(this);
 			checkCollisions();
 			ui.draw(this.player);
 			pause(1000.0 / Game.FPS); // Set FPS
