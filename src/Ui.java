@@ -23,7 +23,7 @@ public class Ui {
 			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/pixelmix.ttf"));
 			this.gunLabel.setFont(font.deriveFont(25f));
 		} catch (IOException|FontFormatException e) {
-			System.out.println("WARNING: NO FONT FILE FOUND");
+			System.err.println("WARNING: NO FONT FILE FOUND");
 		}
 		this.gunLabel.setColor(Color.BLACK);
 		this.gunLabel.setLocation(10, this.gunLabel.getHeight() + 10);
