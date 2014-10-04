@@ -19,8 +19,7 @@ public class Ui {
 		main.add(this.heart3); this.heart3.setLocation(app_width - heart1.getWidth() * 3, 0);
 		
 		try {
-			Font font = Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/pixelmix.ttf"));
-			this.gunLabel.setFont(font.deriveFont(25f));
+			this.gunLabel.setFont( Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/pixelmix.ttf")).deriveFont(25f) );
 		} catch (IOException|FontFormatException e) {
 			System.err.println("WARNING: NO FONT FILE FOUND");
 		}
